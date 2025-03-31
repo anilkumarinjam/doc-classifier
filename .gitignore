@@ -17,3 +17,5 @@ __pycache__/
 
 # Uploads and generated files
 uploads/
+
+trained_model.joblib
