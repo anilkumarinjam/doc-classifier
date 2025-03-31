@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Classification Result</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+    <div class="container result">
+        <h1>Document Classification Result</h1>
+        
+        <div class="result-card">
+            <h2>{{ filename }}</h2>
+            <div class="result-info">
+                <p><strong>Document Type:</strong> <span class="document-type">{{ document_type }}</span></p>
+                <p><strong>Confidence:</strong> <span class="confidence">{{ confidence }}</span></p>
+            </div>
+        </div>
+        
+        <div class="actions">
+            <a href="/" class="button">Classify Another Document</a>
+        </div>
+    </div>
+</body>
+</html>

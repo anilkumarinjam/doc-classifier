@@ -1,41 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document Classifier</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-    <h1>Upload Document for Classification</h1>
-    <form action="/upload" method="POST" enctype="multipart/form-data">
-        <label for="file">Choose a document to upload (PDF or DOCX):</label>
-        <input type="file" name="file" id="file" accept=".pdf, .docx" required><br><br>
-        <input type="submit" value="Upload">
-    </form>
-
-    <div id="result">
-        <p id="message"></p>
-        <p id="document_type"></p>
+    <div class="container">
+        <h1>Legal Document Classifier</h1>
+        <p>Upload a PDF or Word document to classify it:</p>
+        
+        <form action="/classify/" method="post" enctype="multipart/form-data">
+            <div class="file-upload">
+                <input type="file" id="file" name="file" accept=".pdf,.doc,.docx" required>
+                <label for="file" class="file-label">Choose a file</label>
+                <div id="file-name" class="file-name"></div>
+            </div>
+            
+            <div class="document-types">
+                <p>This classifier can identify the following document types:</p>
+                <ul>
+                    <li>Stock Purchase Agreement</li>
+                    <li>Certificate of Incorporation</li>
+                    <li>Investors' Rights Agreement</li>
+                </ul>
+            </div>
+            
+            <button type="submit">Classify Document</button>
+        </form>
     </div>
-
     <script>
-        // Handle file upload
-        document.querySelector("form").onsubmit = function(event) {
-            event.preventDefault();
-            const formData = new FormData();
-            formData.append("file", document.querySelector("#file").files[0]);
-
-            fetch('/upload', {
-                method: 'POST',
-                body: formData,
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("message").textContent = data.message;
-                document.getElementById("document_type").textContent = "Document Type: " + data.document_type;
-            })
-            .catch(error => console.error('Error:', error));
-        };
+        document.getElementById('file').addEventListener('change', function(e) {
+            const fileName = e.target.files[0]?.name;
+            const fileNameDisplay = document.getElementById('file-name');
+            if (fileName) {
+                fileNameDisplay.textContent = fileName;
+                fileNameDisplay.style.display = 'block';
+            } else {
+                fileNameDisplay.textContent = '';
+                fileNameDisplay.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
