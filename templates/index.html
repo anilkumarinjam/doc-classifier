@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Classifier</title>
+</head>
+<body>
+    <h1>Upload Document for Classification</h1>
+    <form action="/upload" method="POST" enctype="multipart/form-data">
+        <label for="file">Choose a document to upload (PDF or DOCX):</label>
+        <input type="file" name="file" id="file" accept=".pdf, .docx" required><br><br>
+        <input type="submit" value="Upload">
+    </form>
+
+    <div id="result">
+        <p id="message"></p>
+        <p id="document_type"></p>
+    </div>
+
+    <script>
+        // Handle file upload
+        document.querySelector("form").onsubmit = function(event) {
+            event.preventDefault();
+            const formData = new FormData();
+            formData.append("file", document.querySelector("#file").files[0]);
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("message").textContent = data.message;
+                document.getElementById("document_type").textContent = "Document Type: " + data.document_type;
+            })
+            .catch(error => console.error('Error:', error));
+        };
+    </script>
+</body>
+</html>

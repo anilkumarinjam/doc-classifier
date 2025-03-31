@@ -1,0 +1,19 @@
+# Python virtual environment
+doc/
+# Compiled Python files
+*.pyc
+__pycache__/
+
+# Environment configuration files
+*.env
+*.pyvenv.cfg
+
+# IDE specific files
+.vscode/
+
+# Temporary files
+*.log
+*.tmp
+
+# Uploads and generated files
+uploads/
